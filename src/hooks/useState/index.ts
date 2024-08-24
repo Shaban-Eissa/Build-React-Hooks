@@ -1,5 +1,5 @@
 export function useState<State>(initialState: State) {
-  const state = initialState;
-  const setState = () => {};
+  let state = initialState;
+  const setState = (newState: State) => (state = newState);
   return [state, setState] as const;
 }
