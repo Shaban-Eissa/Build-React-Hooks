@@ -1,11 +1,14 @@
 import { render } from "../../main";
 
-export function useState<State>(initialState: State) {
-  let state = initialState;
-  const setState = (newState: State) => {
-    state = newState;
+let state: any, setState: any;
 
-    render();
-  };
-  return [state, setState] as const;
+export function useState<State>(initialState: State) {
+  if (state === undefined) {
+    state = initialState;
+    setState = (newState: State) => {
+      state = newState;
+      render();
+    };
+  }
+  return [state, setState] as [State, (newState: State) => void];
 }
