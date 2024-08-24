@@ -7,6 +7,9 @@ function App() {
   const [count, setCount] = useState(0);
   const increment = () => setCount(count + 1);
 
+  const [enabled, setEnabled] = useState(true);
+  const toggle = () => setEnabled(!enabled);
+
   return (
     <>
       <div>
@@ -19,10 +22,10 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={increment}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <button onClick={toggle}>{enabled ? "Disable" : "Enable"}</button>
+        <button disabled={!enabled} onClick={increment}>
+          {count}
+        </button>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
