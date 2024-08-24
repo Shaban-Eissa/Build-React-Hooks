@@ -11,8 +11,12 @@ function App() {
   const toggle = () => setEnabled(!enabled);
 
   useEffect(() => {
-    console.info("consider yourself effective!");
-  });
+    if (enabled) {
+      console.info("consider yourself effective!");
+    } else {
+      console.info("consider yourself ineffective!");
+    }
+  }, [enabled]);
 
   return (
     <>

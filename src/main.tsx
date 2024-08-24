@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import {
-  hookIndex,
   INITIALIZATION,
   Phase,
   resetState,
@@ -30,7 +29,11 @@ export function render(newPhase: Phase) {
   for (const effect of effects) {
     if (!effect) continue;
 
-    effect.callback();
+    const hasDepsChanged = effect.deps
+      ? !effect.deps.every((dep, i) => dep === effect.prevDeps?.[i])
+      : true;
+
+    if (hasDepsChanged) effect.callback();
   }
 }
 
