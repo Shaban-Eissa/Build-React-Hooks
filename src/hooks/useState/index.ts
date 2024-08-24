@@ -17,6 +17,10 @@ export function resetState() {
   hookIndex = 0;
 }
 
+export function incrementHookIndex() {
+  return hookIndex++;
+}
+
 export function useState<State>(initialState: State) {
   const id = hookIndex++;
   if (phase === INITIALIZATION) {

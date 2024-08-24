@@ -1,7 +1,7 @@
-import { useState } from "./hooks/useState";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import { useEffect, useState } from "./hooks";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -9,6 +9,10 @@ function App() {
 
   const [enabled, setEnabled] = useState(true);
   const toggle = () => setEnabled(!enabled);
+
+  useEffect(() => {
+    console.info("consider yourself effective!");
+  });
 
   return (
     <>
