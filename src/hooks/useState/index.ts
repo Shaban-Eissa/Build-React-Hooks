@@ -6,19 +6,27 @@ export const UPDATE = Symbol("phase.update");
 export type Phase = typeof INITIALIZATION | typeof UPDATE;
 export let phase: Phase;
 
-let state: any, setState: any;
+export let hookIndex = 0;
+const states: Array<[any, (newState: any) => void]> = [];
 
 export function setPhase(newPhase: Phase) {
   phase = newPhase;
 }
 
+export function resetState() {
+  hookIndex = 0;
+}
+
 export function useState<State>(initialState: State) {
+  const id = hookIndex++;
   if (phase === INITIALIZATION) {
-    state = initialState;
-    setState = (newState: State) => {
-      state = newState;
-      render(UPDATE);
-    };
+    states[id] = [
+      initialState,
+      (newState: State) => {
+        states[id][0] = newState;
+        render(UPDATE);
+      },
+    ];
   }
-  return [state, setState] as [State, (newState: State) => void];
+  return states[id] as [State, (newState: State) => void];
 }
